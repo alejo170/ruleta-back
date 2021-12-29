@@ -2,19 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { Jugadores } = require('../models/index');
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-
-
-//router.get('/pruebausuarios', (req, res) => {
-//    const vehiculos=[
-//        {nombre:"camilo",marca:"camaro",modelo:"2021"},
-//        {nombre:"hola",marca:"camaro",modelo:"2021"},
-//        {nombre:"camilo",marca:"camaro",modelo:"2021"},
-//    ];
-//    res.send(vehiculos);
-//    console.log("Accedio a la base de datos desde front");
-//});
-
 
 //Trae todos los usuarios
 router.get('/allusers', (req, res) => {
@@ -23,17 +10,6 @@ router.get('/allusers', (req, res) => {
         res.json(users);
    })
 })
-
-//router.get('/allusers', function(req, res) {
-//    Sequelize.sync()
-//    .then(function() {
-//      return Usuarios.findAll();
-//    })
-//    .then(function(users) {
-//      res.json(users);
-//       console.log(JSON.stringify(users));
-//     })
-//  });
 
 router.get('/allusers', (req, res) => Jugadores.findAll()
 .then(users => {
@@ -54,7 +30,7 @@ router.patch('/update/', (req, res) => {
         where: {
             identificador: req.body.cedulaB
        
-        //     id: req.params.id
+        
         }
     }).then(result => {
         res.json(result);
@@ -77,7 +53,7 @@ router.post('/newuser', (req, res) => {
 router.delete('/deleteuser', (req, res) => {
     Jugadores.destroy({
         where: {
-            // id: req.params.id
+            
             identificador: req.body.cedulaB
 
         }
@@ -92,9 +68,7 @@ router.post('/crearusuario', async(req, res) => {
         var response = ''
         response =  await Jugadores.findAll({
             where: { email: req.body.email }
-//                include: [{
-//                    model: Role
-//                }]
+
         });
 
         if (response.length === 0) {
